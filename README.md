@@ -39,14 +39,49 @@
  - standard scailing
 
 ## 3. 활용 모델
- - 1
- - DNN
+ - 머신러닝
+  - 교통사고 건수 데이터 활용한 RandomForestRegressor 모델
+    GridSearch 통한 hyperparameter parameter가 max_depth=6, max_features=13, n_estimators=1000 일 때  
+    MSE: 8.3938, RMSE: 2.8972로 가장 성능이 좋았다. 
+ 
+  - 교통사고 확률 데이터 활용한 RandomForestRegressor 모델
+    GridSearch 통한 hyperparameter 기본 모델이 hyperparameter 한 모델 보다 성능이 더 좋았다.
+    MSE: 8.3981, RMSE: 2.8980
+ 
+ => 결론 : 교통사고 건수와 교통사고 확률 데이터를 RandomForestRegressor에 학습 시켰을 때 성능면에서는 큰 차이가 없었다.
+           feature importance를 보면 두 데이터 모두 api_eta의 중요도가 가장 높았고,
+           그 다음으로 pickup 위치의 위도, 경도와 driver 위치의 위도, 경도 순이었다.
+ 
+ - DNN regressor model 이용한 ATA예측
+  * 머신러닝의 결과를 봤을 때 교통사고 건수와 교통사고 확률 데이터의 모델 간 성능 차이가 거의 없었기 때문에 교통사고 건수 데이터를 기반으로 딥러닝 모델을 생성.
+  - 모델1. linear model로 3 layers.
+    activation function은 relu, optimizer는 RMSprop, batch 하나당 10개 샘플 사용, 총 epoch 수 1000개, 성능평가로 mse와 mae 선택.
+    결과: 테스트 셋 성능 mae: 2.1333 - mse: 9.1143
+          train data의 경우 mse 값 줄더드는 반면에 validation data의 경우 오히려 증가하는 추세를 보여 좋은 모델은 아니라고 판단됨.
+  
+  - 모델2. 첫번째 모델과 마찬가지로 교통사고건수 데이터를 사용
+    train과 test 8:2로 분리
+    dnn regressor model 4 layers.
+    activation function은 relu, input shape은 train 데이터 셋의 column 수 15개, batch size는 32개, epoch 수 200, learning_rate는 0.001 지정, optimizer는 Adam, loss 평가는 mse 선택
+    결과: train의 경우 loss가 감소하는 추세인 반면에 validation의 경우 loss가 작게 감소, test set loss: 16.4813
+    
+ - K-Fold
+  - 교통사고 건수 데이터로 k-fold 진행
+    성능 평가 지표 rmse
+    사용한 모델: Linear Regression, Decision Tree Regressor, Random Forest Regressor, GradientBoostingRegressor, HistGradientBoostingRegressor
+    가장 성능이 좋았던 모델은 GradientBoostingRegressor, rmse 값 0.89
+  
+  - 교통사고 확률 데이터로 k-fold 진행
+    평가지표 rmse
+    사용한 모델: Linear Regression, Decision Tree Regressor, Random Forest Regressor, GradientBoostingRegressor, HistGradientBoostingRegressor
+    가장 성능이 좋았던 모델은 GradientBoostingRegressor, rmse 값 0.89
+    hyperparameter tuning해도 최저 rmse 값은 0.89
+    
+  => 결론: 교통사고 건수 데이터를 포함한 경우, 최고 성능을 보인 모델은 GradientBoostingRegressor였고 rmse 값 2.89.
+           교통사고 확률 데이터를 포함한 경우, 최고 성능을 보인 모델은 동일하게 GradientBoostingRegressor였고 rmse 값 2.89.
+           교통사고 건수 데이터와 교통사고 확률 모두 GradientBoostingRegressor가 rmse 값 2.89로 제일 좋은 성능을 보였음.
 
-## 4. 성능평가
- - MSE 활용
-
-
-## 참고 논문
+## 4. 참고 논문
  - Traffic congestion prediction based on Estimated Time of Arrival
   https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0238200
  - Prediction of Traffic Congestion in Seoul by Deep Neural Network
