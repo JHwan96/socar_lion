@@ -39,11 +39,11 @@
  - standard scailing
 
 ## 3. 활용 모델
- - 머신러닝
-  - 교통사고 건수 데이터 활용한 RandomForestRegressor 모델
-    GridSearch 통한 hyperparameter parameter가 max_depth=6, max_features=13, n_estimators=1000 일 때  
-    MSE: 8.3938, RMSE: 2.8972로 가장 성능이 좋았다. 
- 
+### 3-1. 머신러닝
+  - 교통사고 건수 데이터 활용한 RandomForestRegressor 모델  
+    GridSearch 통한 hyperparameter parameter가 max_depth=6, max_features=13, n_estimators=1000 일 때,   
+    MSE: 8.3938, RMSE: 2.8972로 가장 성능이 좋았다.   
+   
   - 교통사고 확률 데이터 활용한 RandomForestRegressor 모델
     GridSearch 통한 hyperparameter 기본 모델이 hyperparameter 한 모델 보다 성능이 더 좋았다.
     MSE: 8.3981, RMSE: 2.8980
@@ -52,7 +52,7 @@
            feature importance를 보면 두 데이터 모두 api_eta의 중요도가 가장 높았고,
            그 다음으로 pickup 위치의 위도, 경도와 driver 위치의 위도, 경도 순이었다.
  
- - DNN regressor model 이용한 ATA예측
+ ### 3-2. DNN regressor model 이용한 ATA예측
   * 머신러닝의 결과를 봤을 때 교통사고 건수와 교통사고 확률 데이터의 모델 간 성능 차이가 거의 없었기 때문에 교통사고 건수 데이터를 기반으로 딥러닝 모델을 생성.
   - 모델1. linear model로 3 layers.
     activation function은 relu, optimizer는 RMSprop, batch 하나당 10개 샘플 사용, 총 epoch 수 1000개, 성능평가로 mse와 mae 선택.
@@ -65,7 +65,7 @@
     activation function은 relu, input shape은 train 데이터 셋의 column 수 15개, batch size는 32개, epoch 수 200, learning_rate는 0.001 지정, optimizer는 Adam, loss 평가는 mse 선택
     결과: train의 경우 loss가 감소하는 추세인 반면에 validation의 경우 loss가 작게 감소, test set loss: 16.4813
     
- - K-Fold
+ ### 3-3. K-Fold
   - 교통사고 건수 데이터로 k-fold 진행
     성능 평가 지표 rmse
     사용한 모델: Linear Regression, Decision Tree Regressor, Random Forest Regressor, GradientBoostingRegressor, HistGradientBoostingRegressor
