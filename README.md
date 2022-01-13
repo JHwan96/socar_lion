@@ -66,12 +66,12 @@
     결과: train의 경우 loss가 감소하는 추세인 반면에 validation의 경우 loss가 작게 감소, test set loss: 16.4813
     
  ### 3-3. K-Fold
-  - 교통사고 건수 데이터로 k-fold 진행
+  - 교통사고 건수 데이터로 k-fold 진행  
     성능 평가 지표 rmse
     사용한 모델: Linear Regression, Decision Tree Regressor, Random Forest Regressor, GradientBoostingRegressor, HistGradientBoostingRegressor
     가장 성능이 좋았던 모델은 GradientBoostingRegressor, rmse 값 0.89
   
-  - 교통사고 확률 데이터로 k-fold 진행
+  - 교통사고 확률 데이터로 k-fold 진행  
     평가지표 rmse
     사용한 모델: Linear Regression, Decision Tree Regressor, Random Forest Regressor, GradientBoostingRegressor, HistGradientBoostingRegressor
     가장 성능이 좋았던 모델은 GradientBoostingRegressor, rmse 값 0.89
